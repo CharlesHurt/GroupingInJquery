@@ -10,30 +10,23 @@ var selectedItemRef = null
 
 $(document).ready(init)
 
-function getRandomColor() {
-  var temp = '000000' + Math.floor(Math.random() * 16777215).toString(16)
-  temp = '#' + temp.substr(temp.length-6)
-  return temp
-}
-
 function init() {
   nameRef = g('IdItemName')
   valueRef = g('IdItemValue')
 
-  $('#IdUnsortedHost1').on('click', 'div', function(e) {
+  $('#IdUnsortedHost').on('click', 'div', function(e) {
+    console.log('Unsorted clicked')
     if (selectedItemRef !== null) {
       $(selectedItemRef).removeClass('cSelected')
-      $('#IdUnsortedHost1').append(selectedItemRef.detach())
+      $('#IdUnsortedHost').append($(selectedItemRef).detach())
       selectedItemRef = null
     }
-    //e.target.style.backgroundColor = getRandomColor()
-    // var $temp = $(e.target).detach()
-    // $('#IdHost2').append($temp)
+
   })
   $('#IdSortedHost1').on('click', 'div', function(e) {
     if (selectedItemRef !== null) {
       $(selectedItemRef).removeClass('cSelected')
-      $('#IdUnsortedHost1').append(selectedItemRef.detach())
+      $('#IdSortedHost').append($(selectedItemRef).detach())
       selectedItemRef = null
     }
   })
@@ -41,7 +34,7 @@ function init() {
   $('#IdSortedHost2').on('click', 'div', function(e) {
     if (selectedItemRef !== null) {
       $(selectedItemRef).removeClass('cSelected')
-      $('#IdUnsortedHost1').append(selectedItemRef.detach())
+      $('#IdSortedHost2').append($(selectedItemRef).detach())
       selectedItemRef = null
     }
   })
@@ -49,7 +42,7 @@ function init() {
   $('#IdSortedHost3').on('click', 'div', function(e) {
     if (selectedItemRef !== null) {
       $(selectedItemRef).removeClass('cSelected')
-      $('#IdUnsortedHost1').append(selectedItemRef.detach())
+      $('#IdSortedHost3').append($(selectedItemRef).detach())
       selectedItemRef = null
     }
   })
@@ -60,9 +53,7 @@ function init() {
   $('#IdAddItem').click(addItem)
 }
 
-
-
-function addItem() {
+function addItem(e) {
   var name = nameRef.value
   if (name.trim() === '') {
     nameRef.focus()
@@ -104,6 +95,7 @@ function addItem() {
   unselect after they are moved)
   Each group should show a current total of all of the numerical values of the items inside.
   */
+
 }
 
 function unSelect() {
@@ -112,13 +104,20 @@ function unSelect() {
 }
 
 function doItemClick(e) {
+  //e.stopPropagation()
   console.log('doITemCLick:' + e);
   if (selectedItemRef === null) {
     selectedItemRef = e.target
     e.target.classList.add('cSelected')
   } else if (selectedItemRef === e.target) {
     unSelect(selectedItemRef)
-  }  
+  }
+}
+
+function getRandomColor() {
+  var temp = '000000' + Math.floor(Math.random() * 16777215).toString(16)
+  temp = '#' + temp.substr(temp.length-6)
+  return temp
 }
 
 function g() {
