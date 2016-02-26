@@ -6,13 +6,13 @@
 
 var nameRef
 var valueRef
+var selectedItemRef = null
 
 $(document).ready(init)
 
 function getRandomColor() {
   var temp = '000000' + Math.floor(Math.random() * 16777215).toString(16)
   temp = '#' + temp.substr(temp.length-6)
-  console.log('tl:' + temp.length + ' temp:' + temp);
   return temp
 }
 
@@ -21,21 +21,37 @@ function init() {
   valueRef = g('IdItemValue')
 
   $('#IdUnsortedHost1').on('click', 'div', function(e) {
-
-    e.target.style.backgroundColor = getRandomColor()
+    if (selectedItemRef !== null) {
+      $(selectedItemRef).removeClass('cSelected')
+      $('#IdUnsortedHost1').append(selectedItemRef.detach())
+      selectedItemRef = null
+    }
+    //e.target.style.backgroundColor = getRandomColor()
     // var $temp = $(e.target).detach()
     // $('#IdHost2').append($temp)
   })
   $('#IdSortedHost1').on('click', 'div', function(e) {
-
+    if (selectedItemRef !== null) {
+      $(selectedItemRef).removeClass('cSelected')
+      $('#IdUnsortedHost1').append(selectedItemRef.detach())
+      selectedItemRef = null
+    }
   })
 
   $('#IdSortedHost2').on('click', 'div', function(e) {
-
+    if (selectedItemRef !== null) {
+      $(selectedItemRef).removeClass('cSelected')
+      $('#IdUnsortedHost1').append(selectedItemRef.detach())
+      selectedItemRef = null
+    }
   })
 
   $('#IdSortedHost3').on('click', 'div', function(e) {
-
+    if (selectedItemRef !== null) {
+      $(selectedItemRef).removeClass('cSelected')
+      $('#IdUnsortedHost1').append(selectedItemRef.detach())
+      selectedItemRef = null
+    }
   })
 
   // Two options for click events
@@ -44,9 +60,7 @@ function init() {
   $('#IdAddItem').click(addItem)
 }
 
-function g() {
-  return document.getElementById(arguments[0])
-}
+
 
 function addItem() {
   var name = nameRef.value
@@ -70,6 +84,7 @@ function addItem() {
     $newElement.addClass('cItem')
     $newElement.CPH_itemName = name
     $newElement.CPH_itemValue = value
+    $newElement[0].onclick = doItemClick // Unwrap jquery obj to add onclick
     $('#IdUnsortedHost').append($newElement)
   /*} else {
     var $items = []
@@ -91,8 +106,21 @@ function addItem() {
   */
 }
 
-function doClick(e) {
+function unSelect() {
+  $(arguments[0]).removeClass('cSelected')
+  selectedItemRef = null
+}
 
-  e.target.style.backgroundColor = '#' + red + green + blue
+function doItemClick(e) {
+  console.log('doITemCLick:' + e);
+  if (selectedItemRef === null) {
+    selectedItemRef = e.target
+    e.target.classList.add('cSelected')
+  } else if (selectedItemRef === e.target) {
+    unSelect(selectedItemRef)
+  }  
+}
 
+function g() {
+  return document.getElementById(arguments[0])
 }
