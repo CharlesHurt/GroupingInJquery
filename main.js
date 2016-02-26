@@ -3,6 +3,10 @@
 // If click on another item, it de-selects the first
 // Select is red border
 //
+
+var nameRef
+var valueRef
+
 $(document).ready(init)
 
 function getRandomColor() {
@@ -13,90 +17,82 @@ function getRandomColor() {
 }
 
 function init() {
+  nameRef = g('IdItemName')
+  valueRef = g('IdItemValue')
 
-  console.log('grc:' + getRandomColor())
-  console.log('grc:' + getRandomColor())
-  console.log('grc:' + getRandomColor())
-  console.log('grc:' + getRandomColor())
-  console.log('grc:' + getRandomColor())
-  console.log('grc:' + getRandomColor())
-  console.log('grc:' + getRandomColor())
-  console.log('grc:' + getRandomColor())
-  return
-
-  $('#IdHost1').on('click', 'div', function(e) {
+  $('#IdUnsortedHost1').on('click', 'div', function(e) {
 
     e.target.style.backgroundColor = getRandomColor()
     // var $temp = $(e.target).detach()
-    //$('#IdHost2').append($temp)
+    // $('#IdHost2').append($temp)
+  })
+  $('#IdSortedHost1').on('click', 'div', function(e) {
+
   })
 
-  $('#IdHost2').on('click', 'div', function(e) {
-    var red = getRandomColor()
-    var green = getRandomColor()
-    var blue = getRandomColor()
-    //debugger
-    e.target.style.backgroundColor = '#' + red + green + blue
-    //console.log('clicked:' + e);
-    var $temp = $(e.target).detach()
-    //$('#IdHost1').append($temp)
+  $('#IdSortedHost2').on('click', 'div', function(e) {
+
   })
 
-  $('#IdHost3').on('click', 'div', function(e) {
-    var red = getRandomColor()
-    var green = getRandomColor()
-    var blue = getRandomColor()
-    //debugger
-    e.target.style.backgroundColor = '#' + red + green + blue
-    //console.log('clicked:' + e);
-    var $temp = $(e.target).detach()
-    //$('#IdHost1').append($temp)
+  $('#IdSortedHost3').on('click', 'div', function(e) {
+
   })
+
   // Two options for click events
   // $().click()
   // $().on('click')
-  $('#IdAddCup').click(addCup)
+  $('#IdAddItem').click(addItem)
 }
 
 function g() {
   return document.getElementById(arguments[0])
 }
 
+function addItem() {
+  var name = nameRef.value
+  if (name.trim() === '') {
+    nameRef.focus()
+    return
+  }
 
+  var value = valueRef.value
+  if (value.trim() === '') {
+    valueRef.focus()
+    return
+  }
 
-function addCup() {
-  var numOfCups = g('IdCupQty').value
-  if ((numOfCups === '') || (numOfCups === 0)) {
-    // The way to add single cup
+  g('IdItemName').value = ''
+  g('IdItemValue').value = ''
+  //var numOfItems = g('IdItemQty').value
+  /*if ((numOfItems === '') || (numOfItems === 0)) {*/
     var $newElement = $('<div>')
-    //console.log('rc:' + getRandomColor());
     $newElement.css('background-color', getRandomColor())
-    //console.log('gc=' + $newElement.style.backgroundColor);
-    //debugger
-
-    $newElement.addClass('cCup')
-    $('#IdHost1').append($newElement)
-    //console.log('cup add called');
-  } else {
-    // The way to add multiple cups
-    var $cups = []
-    for (var i = 0; i < numOfCups; i++) {
-      var $newElement = $('<div>').addClass('cCup')
+    $newElement.addClass('cItem')
+    $newElement.CPH_itemName = name
+    $newElement.CPH_itemValue = value
+    $('#IdUnsortedHost').append($newElement)
+  /*} else {
+    var $items = []
+    for (var i = 0; i < numOfItems; i++) {
+      var $newElement = $('<div>').addClass('cItem')
       $newElement.css('background-color', getRandomColor())
-      //console.log('gc=' + getColor());
-      //debugger
-      //$newElement.css('background-color', getColor())
       $cups.push($newElement)
     }
-    $('#IdHost1').append($cups)
-  }
+    $('#IdUnsortedHost').append($items)
+  }*/
+  //console.log('Add item')
+  // add to unsort
+  // 1) Clear inputs
+  /*
+  By clicking to select, and then clicking another group, you can move items.
+  (you should only be able to select one item at a time, and items should
+  unselect after they are moved)
+  Each group should show a current total of all of the numerical values of the items inside.
+  */
 }
 
 function doClick(e) {
-  var red = getRandomColor()
-  var green = getRandomColor()
-  var blue = getRandomColor()
-  //debugger
+
   e.target.style.backgroundColor = '#' + red + green + blue
-  //console.log('clicked:' + e);
+
 }
