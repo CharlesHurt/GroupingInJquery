@@ -1,0 +1,21 @@
+body {
+
+}
+
+.cCup {
+  width:50px;
+  height:50px;
+  border-radius:25px;
+  background-color:blue;
+  display:inline-block;
+}
+
+.cHost {
+  width:40%;
+  height:90%;
+  background-color:#efefef;
+  display:inline-block;
+  border:1px solid gray;
+  padding:10px;
+  margin:10px;
+}
